@@ -39,18 +39,18 @@ static void check_mpi_error(const char* call, int ret, const char* file, int lin
     } while (0)
 
 
-constexpr int TRACKER_RANK = 0;
+enum Constants {
+    TRACKER_RANK = 0,
+    ACK = 1,
+    SWARM_REQUEST = 55,
+    PEER_UPDATE = 44,
+    SINGLE_FILE_DOWNLOAD_COMPLETED = 33,
+    CLIENT_GOT_ALL_FILES = 22,
+    TRACKER_TAG = 1,
+    DOWNLOAD_TAG = 2,
+    UPLOAD_TAG = 3
+};
 
-constexpr int ACK = 1;
-
-constexpr int SWARM_REQUEST = 55;
-constexpr int PEER_UPDATE = 44;
-constexpr int SINGLE_FILE_DOWNLOAD_COMPLETED = 33;
-constexpr int CLIENT_GOT_ALL_FILES = 22;
-
-constexpr int TRACKER_TAG = 1;
-constexpr int DOWNLOAD_TAG = 2;
-constexpr int UPLOAD_TAG = 3;
 
 /* File control block for a file 
  * contains a list of this file's seeds and peers */

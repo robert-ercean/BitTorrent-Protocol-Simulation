@@ -90,8 +90,7 @@ void Peer::download_thread_func() {
 
                 /* Wait the peer's / seed's response */
                 int response;
-                CHECK_MPI_RET(
-                    MPI_Recv(&response, 1, MPI_INT, target_peer, DOWNLOAD_TAG,MPI_COMM_WORLD, MPI_STATUS_IGNORE));
+                CHECK_MPI_RET(MPI_Recv(&response, 1, MPI_INT, target_peer, DOWNLOAD_TAG,MPI_COMM_WORLD, MPI_STATUS_IGNORE));
 
                 if (response == ACK) {
                     /* Only add the this segment to the owned list if a peer / seeds
@@ -263,14 +262,10 @@ void Peer::parse_initial_files() {
  * from the peers / seeds */
 vector<int> Peer::recv_file_swarm_from_tracker(string file_name) {
     int buf_size;
-    CHECK_MPI_RET(
-        MPI_Recv(&buf_size, 1, MPI_INT, TRACKER_RANK, TRACKER_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE)
-    );
+    CHECK_MPI_RET(MPI_Recv(&buf_size, 1, MPI_INT, TRACKER_RANK, TRACKER_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE));
 
     vector<char> response_buf(buf_size + 1);
-    CHECK_MPI_RET(
-        MPI_Recv(response_buf.data(), buf_size, MPI_CHAR, TRACKER_RANK, TRACKER_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE)
-    );
+    CHECK_MPI_RET(MPI_Recv(response_buf.data(), buf_size, MPI_CHAR, TRACKER_RANK, TRACKER_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE));
     response_buf[buf_size] = '\0';
 
     /* Parse the swarm */
