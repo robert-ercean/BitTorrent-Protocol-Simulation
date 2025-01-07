@@ -12,7 +12,6 @@ It consists of two main parts:
 - [Overview](#overview)
   - [Tracker Overview](#tracker-overview)
   - [Peer Overview](#peer-overview)
-- [Build Instructions](#build-instructions)
 - [Detailed Workflow](#detailed-workflow)
   - [Tracker Side](#tracker-workflow)
   - [Peer Side](#peer-workflow)
