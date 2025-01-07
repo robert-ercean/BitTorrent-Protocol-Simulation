@@ -296,8 +296,7 @@ vector<int> Peer::recv_file_swarm_from_tracker(string file_name) {
 
 /* Requests a file's swarm from the tracker 
  * Firstly send the action type, then
- * the file name string size, then
- * the file name */
+ * the file name string size, then the file name */
 void Peer::req_file_swarm_from_tracker(string file_name) {
     int file_name_size = (int)file_name.size();
 

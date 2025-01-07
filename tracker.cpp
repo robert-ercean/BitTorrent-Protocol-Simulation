@@ -23,17 +23,17 @@ void Tracker::start_mediating_the_swarms() {
         CHECK_MPI_RET(MPI_Recv(&type, 1, MPI_INT, MPI_ANY_SOURCE, TRACKER_TAG, MPI_COMM_WORLD, &status));
 		client_rank = status.MPI_SOURCE;
         switch(type) {
-            case SWARM_REQUEST:
-                swarm_req(client_rank);
-                break;
-            case PEER_UPDATE:
-                peer_update(client_rank);
-                break;
             case SINGLE_FILE_DOWNLOAD_COMPLETED:
                 download_completed(client_rank);
                 break;
+            case SWARM_REQUEST:
+                swarm_req(client_rank);
+                break;
             case CLIENT_GOT_ALL_FILES:
                 all_downloads_completed(client_rank);
+                break;
+            case PEER_UPDATE:
+                peer_update(client_rank);
                 break;
         }
         cerr << "[TRACKER]: Clients who've completed all their downloads: " << clients_done << endl;
