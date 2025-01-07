@@ -16,5 +16,5 @@ tracker.o: tracker.cpp tracker.h utils.h
 	$(CC) -c $< $(FLAGS)
 
 clean:
-	rm -rf tema2 main.o peer.o tracker.o client*_file* 
+	rm -rf tema2 main.o peer.o tracker.o
 
