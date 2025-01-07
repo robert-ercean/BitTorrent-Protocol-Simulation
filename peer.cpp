@@ -96,8 +96,7 @@ void Peer::download_thread_func() {
                     // We have successfully downloaded the segment
 					cout << "[Peer " << rank << "]: Successfully downloaded segment " << segment_hash << " from peer" << target_peer << endl;
                     mtx.lock();
-					if (find(owned_files[wanted_file_name].begin(), owned_files[wanted_file_name].end(), segment_hash) == owned_files[wanted_file_name].end())
-						owned_files[wanted_file_name].push_back(segment_hash);
+					owned_files[wanted_file_name].push_back(segment_hash);
                     mtx.unlock();
                     segment_count++;
                     segment_downloaded = true;
