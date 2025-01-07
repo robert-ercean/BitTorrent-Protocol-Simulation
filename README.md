@@ -119,7 +119,6 @@ The code uses MPI for communication among:
 --
 
 ## Efficiency
-details on how the round robin approach is efficient
 
 - **Round-Robin Approach**  
   - The download thread uses a round-robin approach to request segments from peers.
