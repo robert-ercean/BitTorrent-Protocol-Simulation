@@ -1,13 +1,5 @@
 #pragma once
 
-#include <mpi.h>
-#include <thread>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fstream>
-#include <vector>
-#include <unordered_map>
-
 #include "utils.h"
 
 using namespace std;
@@ -15,12 +7,16 @@ using namespace std;
 class Tracker {
 private:
 	int num_tasks;
-	int rank_;
-	int downloads_completed_nr_ = 0;
+	int clients_done = 0;
 
+	/* Stores each file's hashes, once a client requests a certain file's swarm 
+	 * the tracker will send it, and, additionally will send all that file's hashes
+	 * so the client knows what hashes it needs to request from the peers/seeds */
 	unordered_map<string, vector<string>> file_content;
-
+	/* Stores a list of associated peers / seeds for a certain file */
     unordered_map<string, vector<int>> swarms;
+	/* Stores a file's list of peers and seeds */
+	unordered_map<string, fcb> file_control_blocks;
 
 	void swarm_req(int source);
 	
@@ -42,12 +38,11 @@ private:
 	
 	void all_downloads_completed(int source);
 	
-	void parse_peer_file_list(string file_list, int rank);
+	void parse_seed_file_list(string file_list, int rank);
 
 public:
-	Tracker(int numtasks, int rank) {
+	Tracker(int numtasks) {
 		num_tasks = numtasks;
-		rank_ = rank;
 	}
 
 	void init();

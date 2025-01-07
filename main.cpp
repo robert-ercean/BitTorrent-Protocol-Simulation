@@ -17,14 +17,14 @@ int main(int argc, char *argv[]) {
     int provided;
     MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &provided);
     if (provided < MPI_THREAD_MULTIPLE) {
-        fprintf(stderr, "MPI nu are suport pentru multi-threading\n");
+        fprintf(stderr, "MPI has no multi-threading support\n");
         exit(-1);
     }
     MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     if (rank == TRACKER_RANK) {
-		auto tracker = Tracker(numtasks, rank);
+		auto tracker = Tracker(numtasks);
         tracker.init();
     } else {
 		auto peer = Peer(numtasks, rank);

@@ -1,15 +1,22 @@
 #pragma once
 
-#include <string>
-#include <iostream>
 #include <mpi.h>
+#include <mutex>
+#include <thread>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fstream>
+#include <vector>
+#include <unistd.h>
+#include <unordered_map>
+#include <sstream>
+#include <algorithm>
+#include <iostream>
 
 using namespace std;
 
-// #define check_mpi_error(n) __check_mpi_error(__FILE__, __LINE__, n)
-
-// /* Taken from: https://stackoverflow.com/questions/72949381/openmpi-backtrace-with-line-numbers */
-/**
+/* Template taken from: https://stackoverflow.com/questions/72949381/openmpi-backtrace-with-line-numbers
+ *
  * Prints MPI errors.
  */
 static void check_mpi_error(const char* call, int ret, const char* file, int line) {
@@ -34,13 +41,20 @@ static void check_mpi_error(const char* call, int ret, const char* file, int lin
 
 constexpr int TRACKER_RANK = 0;
 
-constexpr int OK = 1;
+constexpr int ACK = 1;
 
-constexpr int FILE_REQUEST = 2;
-constexpr int PEER_UPDATE = 3;
-constexpr int DOWNLOAD_COMPLETED = 4;
-constexpr int ALL_DOWNLOADS_COMPLETED = 5;
+constexpr int SWARM_REQUEST = 55;
+constexpr int PEER_UPDATE = 44;
+constexpr int SINGLE_FILE_DOWNLOAD_COMPLETED = 33;
+constexpr int CLIENT_GOT_ALL_FILES = 22;
 
 constexpr int TRACKER_TAG = 1;
 constexpr int DOWNLOAD_TAG = 2;
 constexpr int UPLOAD_TAG = 3;
+
+/* File control block for a file 
+ * contains a list of this file's seeds and peers */
+typedef struct {
+    vector<int> seeds;
+    vector<int> peers;
+} fcb;

@@ -1,8 +1,0 @@
-1
-file3 4
-hash_file_3_0
-hash_file_3_1
-hash_file_3_2
-hash_file_3_3
-1
-file1
