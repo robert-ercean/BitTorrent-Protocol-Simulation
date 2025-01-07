@@ -1,30 +1,38 @@
 #pragma once
 
 #include <string>
+#include <iostream>
+#include <mpi.h>
 
-#define check_mpi_error(n) __check_mpi_error(__FILE__, __LINE__, n)
+using namespace std;
 
-/* Taken from: https://stackoverflow.com/questions/72949381/openmpi-backtrace-with-line-numbers */
-inline void __check_mpi_error(const char *file, const int line, const int n)
-{
-    char errbuffer[MPI_MAX_ERROR_STRING];
-    int errlen;
+// #define check_mpi_error(n) __check_mpi_error(__FILE__, __LINE__, n)
 
-    if (n != MPI_SUCCESS)
-    {
-        MPI_Error_string(n, errbuffer, &errlen);
-        printf("MPI-error: %s\n", errbuffer);
-        printf("Location: %s:%i\n", file, line);
-        MPI_Abort(MPI_COMM_WORLD, n);
+// /* Taken from: https://stackoverflow.com/questions/72949381/openmpi-backtrace-with-line-numbers */
+/**
+ * Prints MPI errors.
+ */
+static void check_mpi_error(const char* call, int ret, const char* file, int line) {
+    if (ret != MPI_SUCCESS) {
+        cerr << "[PEER] MPI call \"" << call << "\" failed at "
+             << file << ":" << line 
+             << " with error code " << ret << endl;
+        // exit(-1);
     }
 }
 
+/**
+ * Wraps an MPI call and checks its return code.
+ */
+#define CHECK_MPI_RET(fncall)                 \
+    do {                                      \
+        int ret = (fncall);                  \
+        check_mpi_error(#fncall, ret,        \
+                        __FILE__, __LINE__); \
+    } while (0)
+
 
 constexpr int TRACKER_RANK = 0;
-constexpr int MAX_FILES = 10;
-constexpr int MAX_FILENAME = 15;
-constexpr int HASH_SIZE = 32;
-constexpr int MAX_CHUNKS = 100;
 
 constexpr int OK = 1;
 

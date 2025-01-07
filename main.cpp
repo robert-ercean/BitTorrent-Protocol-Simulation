@@ -30,5 +30,6 @@ int main(int argc, char *argv[]) {
 		auto peer = Peer(numtasks, rank);
         peer.init();
     }
+    MPI_Barrier(MPI_COMM_WORLD);
     MPI_Finalize();
 }
